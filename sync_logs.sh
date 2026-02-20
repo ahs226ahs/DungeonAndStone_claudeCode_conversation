@@ -1,25 +1,13 @@
 #!/bin/bash
-# DAS 게임 개발 대화 로그만 날짜별 동기화
-# Claude Code를 C:/Users/user/DungeonAndStone 에서 실행했을 때 생성되는 대화만 가져옴
+# 던전 앤 스톤(DAS) 게임 개발 대화 로그 날짜별 동기화
 
 REPO="C:/Users/user/DAS-claudecode"
+SOURCE="C:/Users/user/.claude/projects/C--Users-user"
 DATE=$(date +"%Y-%m-%d")
+DEST="$REPO/conversations/$DATE"
 
-# DAS 관련 프로젝트 폴더만 지정
-SOURCES=(
-  "C:/Users/user/.claude/projects/c--Users-user-DAS"
-  "C:/Users/user/.claude/projects/c--Users-user-DAS3D"
-  "C:/Users/user/.claude/projects/c--Users-user-DungeonAndStone"
-)
-
-for SOURCE in "${SOURCES[@]}"; do
-  if [ -d "$SOURCE" ]; then
-    FOLDER_NAME=$(basename "$SOURCE")
-    DEST="$REPO/conversations/$DATE/$FOLDER_NAME"
-    mkdir -p "$DEST"
-    cp "$SOURCE"/*.jsonl "$DEST/" 2>/dev/null
-  fi
-done
+mkdir -p "$DEST"
+cp "$SOURCE"/*.jsonl "$DEST/" 2>/dev/null
 
 cd "$REPO" || exit
 
